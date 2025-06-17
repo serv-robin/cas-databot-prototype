@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useRef, useEffect } from "react"
-import { Send, MessageCircle, Lightbulb, Loader2 } from "lucide-react"
+import { Send, Lightbulb, Loader2 } from "lucide-react"
 
 interface Message {
   role: "user" | "assistant"
@@ -65,7 +65,7 @@ const DocumentQA = () => {
       setMessages([
         {
           role: "assistant",
-          content: "Hello! I'm here to help you with questions about the data dictionary. What would you like to know?",
+          content: "Hello! I'm here to help you with questions about your data warehouse. What would you like to know?",
           timestamp: new Date(),
         },
       ])
@@ -150,10 +150,8 @@ const DocumentQA = () => {
 
   // Suggested questions
   const suggestions = [
-    "What data fields are available in this dataset?",
-    "Can you explain the data types used?",
-    "What are the business rules for data validation?",
-    "How are missing values handled?",
+    "Where can I find customer data in my data warehouse?",
+    "Can you explain to me what a schema is? I'm a business user.",
   ]
 
   // Show loading while checking configuration
@@ -176,7 +174,6 @@ const DocumentQA = () => {
       <div className="flex flex-col h-screen max-w-4xl mx-auto bg-white">
         <div className="bg-red-600 text-white p-4">
           <div className="flex items-center gap-3">
-            <MessageCircle className="w-6 h-6" />
             <div>
               <h1 className="text-xl font-semibold">Configuration Error</h1>
               <p className="text-red-100 text-sm">Missing OpenAI API key or Assistant ID</p>
@@ -205,14 +202,11 @@ const DocumentQA = () => {
 
   return (
     <div className="flex flex-col h-screen max-w-4xl mx-auto bg-white">
-      {/* Header */}
-      <div className="bg-blue-600 text-white p-4 shadow-lg">
-        <div className="flex items-center gap-3">
-          <MessageCircle className="w-6 h-6" />
-          <div>
-            <h1 className="text-xl font-semibold">Data Dictionary Q&A</h1>
-            <p className="text-blue-100 text-sm">Ask me anything about your data dictionary</p>
-          </div>
+      {/* Logo Header */}
+      <div className="p-6 border-b border-gray-200">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-gray-800">Your Company</h1>
+          <div className="w-12 h-0.5 bg-blue-600 mx-auto mt-2"></div>
         </div>
       </div>
 
@@ -249,12 +243,16 @@ const DocumentQA = () => {
           </div>
         )}
 
-        {/* Suggestions */}
-        {messages.length <= 1 && !isLoading && (
+        <div ref={messagesEndRef} />
+      </div>
+
+      {/* Suggestions - positioned above input */}
+      {messages.length <= 1 && !isLoading && (
+        <div className="px-4 pb-2">
           <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
             <div className="flex items-center gap-2 mb-3">
               <Lightbulb className="w-5 h-5 text-yellow-600" />
-              <span className="font-medium text-yellow-800">Suggested Questions</span>
+              <span className="font-medium text-yellow-800">Try asking:</span>
             </div>
             <div className="space-y-2">
               {suggestions.map((suggestion, index) => (
@@ -268,10 +266,8 @@ const DocumentQA = () => {
               ))}
             </div>
           </div>
-        )}
-
-        <div ref={messagesEndRef} />
-      </div>
+        </div>
+      )}
 
       {/* Input */}
       <div className="border-t bg-gray-50 p-4">
@@ -281,7 +277,7 @@ const DocumentQA = () => {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={(e) => e.key === "Enter" && handleSubmit()}
-            placeholder="Ask a question about the data dictionary..."
+            placeholder="Ask a question about your data warehouse..."
             className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             disabled={isLoading || !threadId}
           />

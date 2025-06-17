@@ -1,3 +1,4 @@
+// /Users/robintitus/Desktop/Servant/v0/cas-databot-prototype/app/api/chat/message/route.ts
 import { type NextRequest, NextResponse } from "next/server"
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY
