@@ -205,7 +205,7 @@ const DocumentQA = () => {
       {/* Logo Header */}
       <div className="p-6 border-b border-gray-200">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-800">Your Company</h1>
+          <h1 className="text-2xl font-bold text-gray-800">CAS Databot(Beta)</h1>
           <div className="w-12 h-0.5 bg-blue-600 mx-auto mt-2"></div>
         </div>
       </div>
