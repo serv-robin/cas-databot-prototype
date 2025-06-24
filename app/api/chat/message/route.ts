@@ -73,7 +73,10 @@ export async function POST(request: NextRequest) {
 
       if (messagesResponse.data && messagesResponse.data.length > 0) {
         const latestMessage = messagesResponse.data[0]
-        const response = latestMessage.content[0].text.value
+        let response = latestMessage.content[0].text.value
+
+        // Remove citation patterns like 【4:2†source】
+        response = response.replace(/【\d+:\d+†source】/g, '')
 
         return NextResponse.json({ response })
       } else {
