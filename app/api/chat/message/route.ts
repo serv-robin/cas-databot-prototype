@@ -76,7 +76,7 @@ export async function POST(request: NextRequest) {
         let response = latestMessage.content[0].text.value
 
         // Remove citation patterns like 【4:2†source】
-        response = response.replace(/【\d+:\d+†source】/g, '')
+        response = response.replace(/【[\d:†\(\)\w\s\-\.]+】/g, '')
 
         return NextResponse.json({ response })
       } else {
